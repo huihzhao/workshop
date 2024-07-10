@@ -5,8 +5,9 @@ import {
   OnProgressEvent,
   VisibilityType,
 } from "@bnb-chain/greenfield-js-sdk";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
+
 
 export const GreenLocker = () => {
   const { address, connector } = useAccount();
@@ -19,6 +20,29 @@ export const GreenLocker = () => {
     objectName: "",
     file: null,
   });
+
+  // function MyComponent() {
+  //   const [info, setInfo] = useState({ objectName: "" });
+  //   const [fileList, setFileList] = useState([]);
+  //   useEffect(() => {
+  //     // Fetch file list from Greenfield bucket
+  //     const fetchFiles = async () => {
+  //       try {
+  //         const response = await client.object.listObjects({
+  //           bucketName: "12345",
+  //           endpoint: ""
+  //         }); // Pass the bucketName as the configuration parameter
+  //         const data = response; // Access the 'data' property directly
+  //       } catch (error) {
+  //         console.error("Error fetching file list:", error);
+  //         // Handle the error (e.g., show a user-friendly message)
+  //       }
+  //     };
+
+  //     fetchFiles();
+  //   }, []); // Run only once when the component mounts
+  
+
   return (
     <>
       <section className="section">
@@ -144,31 +168,7 @@ export const GreenLocker = () => {
               </div>
             </div>
 
-            <div className="field is-horizontal">
-              <div className="field-label is-normal">
-                <label className="label">Object Name</label>
-              </div>
-              <div className="field-body">
-                <div className="field">
-                  <div className="control">
-                    <input
-                      className="input"
-                      type="text"
-                      value={info.objectName}
-                      placeholder="Name your object"
-                      onChange={(e) =>
-                        setInfo({ ...info, objectName: e.target.value })
-                      }
-                    />
-                    <p className="help">
-                      This is the name your file will have in the bucket
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-              
-            {/* File Upload Section - Aligned with Bucket Name and Object Name */}  
+            {/* File Upload Section - Aligned with Bucket Name and Object Name */}
             <div className="field is-horizontal">
               <div className="field-label is-normal">
                 <label className="label">File</label>
@@ -263,6 +263,30 @@ export const GreenLocker = () => {
             </div>
 
             {/* Download */}
+            <div className="field is-horizontal">
+              <div className="field-label is-normal">
+                <label className="label">Object Name</label>
+              </div>
+              <div className="field-body">
+                <div className="field">
+                  <div className="control">
+                    <input
+                      className="input"
+                      type="text"
+                      value={info.objectName}
+                      placeholder="Name your object"
+                      onChange={(e) =>
+                        setInfo({ ...info, objectName: e.target.value })
+                      }
+                    />
+                    <p className="help">
+                      This is the name your file will have in the bucket
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
             <div className="field">
               <button
                 className="button is-primary"
@@ -280,7 +304,6 @@ export const GreenLocker = () => {
                     alert("No offchain, please create offchain pairs first");
                     return;
                   }
-
 
                   const res = await client.object.downloadFile(
                     {
